@@ -1,5 +1,2 @@
+require "ikalog/engine"
 require "ikalog/version"
-
-module Ikalog
-  # Your code goes here...
-end
