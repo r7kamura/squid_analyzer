@@ -14,7 +14,7 @@ module Ikalog
     # @todo
     # @return [Ikalog::CaptureSource]
     def capture_source
-      @capture_source ||= Ikalog::CaptureSource.new
+      @capture_source ||= CaptureSource.new
     end
 
     # @todo
