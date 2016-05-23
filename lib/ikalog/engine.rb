@@ -1,4 +1,5 @@
 require "ikalog/capture_source"
+require "ikalog/scene_detection"
 
 module Ikalog
   class Engine
@@ -19,7 +20,8 @@ module Ikalog
     # @todo
     def read_next_frame
       frame = capture_source.read_frame
-      puts frame
+      scene = SceneDetection.new(frame).call
+      puts scene
       sleep 1
     end
   end
