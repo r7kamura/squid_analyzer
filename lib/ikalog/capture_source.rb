@@ -19,7 +19,13 @@ module Ikalog
 
     # @raise [OpenCV::CvError, StandardError]
     def open_cv_capture
+      blink_cv_capture_for_device_to_be_recognized
       @cv_capture = ::OpenCV::CvCapture.open(@device_id)
+    end
+
+    # @note Some devices cannot be recognized at the 1st time.
+    def blink_cv_capture_for_device_to_be_recognized
+      ::OpenCV::CvCapture.open.close
     end
   end
 end
