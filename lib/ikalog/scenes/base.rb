@@ -17,11 +17,6 @@ module Ikalog
           raise ::NotImplementedError
         end
       end
-
-      # @param frame [Ikalog::Frame]
-      def initialize(frame)
-        @frame = frame
-      end
     end
   end
 end
