@@ -1,12 +1,12 @@
-module Ikalog
+module SquidAnalyzer
   class SceneDetector
     # @param options [Hash{Symbol => Object}]
     def initialize(options)
       @options = options
     end
 
-    # @param frame [Ikalog::Frame]
-    # @return [Ikalog::Scenes::Base, nil]
+    # @param frame [SquidAnalyzer::Frame]
+    # @return [SquidAnalyzer::Scenes::Base, nil]
     def call(frame)
       keyword_arguments = @options.merge(frame: frame)
       Detection.new(**keyword_arguments).call
@@ -41,7 +41,7 @@ module Ikalog
         @width = width
       end
 
-      # @return [Ikalog::Scenes::Base, nil]
+      # @return [SquidAnalyzer::Scenes::Base, nil]
       def call
         if has_valid_background? && has_valid_foreground?
           @scene_class.new

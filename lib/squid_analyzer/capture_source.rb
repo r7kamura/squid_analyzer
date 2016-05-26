@@ -1,7 +1,7 @@
-require "ikalog/frame"
+require "squid_analyzer/frame"
 require "opencv"
 
-module Ikalog
+module SquidAnalyzer
   class CaptureSource
     # @param device_id [Fixnum, String, Symbol, nil]
     # @raise [OpenCV::CvError, StandardError]
@@ -10,7 +10,7 @@ module Ikalog
       open_cv_capture
     end
 
-    # @return [Ikalog::Frame]
+    # @return [SquidAnalyzer::Frame]
     def read_frame
       Frame.new(@cv_capture.query)
     end

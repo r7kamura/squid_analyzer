@@ -1,4 +1,4 @@
-module Ikalog
+module SquidAnalyzer
   class Scene
   end
 end

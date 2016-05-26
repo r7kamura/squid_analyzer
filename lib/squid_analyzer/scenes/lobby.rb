@@ -1,6 +1,6 @@
-require "ikalog/scenes/base"
+require "squid_analyzer/scenes/base"
 
-module Ikalog
+module SquidAnalyzer
   module Scenes
     class Lobby < Base
     end

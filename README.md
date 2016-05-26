@@ -1,12 +1,12 @@
-# Ikalog
-[IkaLog](https://github.com/hasegaw/IkaLog) in Ruby.
+# SquidAnalyzer
+Data analyzer for Splatoon.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "ikalog"
+gem "squid_analyzer"
 ```
 
 And install OpenCV 2.x (The installation code below is for OS X):
@@ -25,7 +25,7 @@ bundle
 Or install it yourself as:
 
 ```sh
-gem install ikalog
+gem install squid_analyzer
 ```
 
 ## Development
@@ -36,7 +36,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/r7kamura/ikalog.
+Bug reports and pull requests are welcome on GitHub at https://github.com/r7kamura/squid_analyzer.
 
 
 ## License

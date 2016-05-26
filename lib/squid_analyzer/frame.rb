@@ -1,4 +1,4 @@
-module Ikalog
+module SquidAnalyzer
   class Frame
     attr_reader :ipl_image
 

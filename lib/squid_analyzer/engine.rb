@@ -1,8 +1,8 @@
-require "ikalog/capture_source"
-require "ikalog/scene_detector"
-require "ikalog/scenes/lobby"
+require "squid_analyzer/capture_source"
+require "squid_analyzer/scene_detector"
+require "squid_analyzer/scenes/lobby"
 
-module Ikalog
+module SquidAnalyzer
   class Engine
     def run
       loop do
@@ -13,13 +13,13 @@ module Ikalog
     private
 
     # @todo
-    # @return [Ikalog::CaptureSource]
+    # @return [SquidAnalyzer::CaptureSource]
     def capture_source
       @capture_source ||= CaptureSource.new
     end
 
-    # @param frame [Ikalog::Frame]
-    # @return [Ikalog::Scene, nil]
+    # @param frame [SquidAnalyzer::Frame]
+    # @return [SquidAnalyzer::Scene, nil]
     def detect_scene(frame)
       scene_detectors.find do |scene_detector|
         if (scene = scene_detector.call(frame.clone))
@@ -35,10 +35,10 @@ module Ikalog
       sleep 1
     end
 
-    # @return [Array<Ikalog::SceneDetector>]
+    # @return [Array<SquidAnalyzer::SceneDetector>]
     def scene_detectors
       @scene_detectors ||= [
-        ::Ikalog::SceneDetector.new(
+        ::SquidAnalyzer::SceneDetector.new(
           background_method: "TODO",
           background_threshold: 0.100,
           foreground_method: "TODO",
@@ -47,7 +47,7 @@ module Ikalog
           label: "lobby",
           left: 0,
           mask_image_file_name: "lobby.png",
-          scene_class: ::Ikalog::Scenes::Lobby,
+          scene_class: ::SquidAnalyzer::Scenes::Lobby,
           top: 0,
           width: 640,
         ),

@@ -1,14 +1,14 @@
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "ikalog/version"
+require "squid_analyzer/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "ikalog"
-  spec.version       = Ikalog::VERSION
+  spec.name          = "squid_analyzer"
+  spec.version       = SquidAnalyzer::VERSION
   spec.authors       = ["r7kamura"]
   spec.email         = ["r7kamura@gmail.com"]
-  spec.summary       = "IkaLog in Ruby"
-  spec.homepage      = "https://github.com/r7kamura/ikalog"
+  spec.summary       = "Data analyzer for Splatoon."
+  spec.homepage      = "https://github.com/r7kamura/squid_analyzer"
   spec.license       = "MIT"
 
   spec.bindir        = "exe"
