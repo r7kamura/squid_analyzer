@@ -28,6 +28,13 @@ Or install it yourself as:
 gem install squid_analyzer
 ```
 
+## Requirements
+SquidAnalyzer is tested on:
+
+- Mac OS X 10.10.5
+- OpenCV 2.4.12_2
+- Ruby 2.2.0
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
