@@ -34,6 +34,7 @@ SquidAnalyzer is tested on:
 - Mac OS X 10.10.5
 - OpenCV 2.4.12_2
 - Ruby 2.2.0
+- [Intensity Shuttle for USB 3.0](https://www.blackmagicdesign.com/jp/products/intensity)
 
 ## Development
 
