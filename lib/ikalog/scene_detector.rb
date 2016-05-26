@@ -62,6 +62,22 @@ module Ikalog
         1.0
       end
 
+      # @return [OpenCV::CvMat]
+      def binary_image_only_black_area
+        @frame.ipl_image.BGR2HSV.in_range(
+          ::OpenCV::CvScalar.new(0, 0, 0),
+          ::OpenCV::CvScalar.new(180, 255, 32),
+        ).not
+      end
+
+      # @return [OpenCV::CvMat]
+      def binary_image_only_white_area
+        @frame.ipl_image.BGR2HSV.in_range(
+          ::OpenCV::CvScalar.new(0, 0, 230),
+          ::OpenCV::CvScalar.new(180, 32, 255),
+        ).not
+      end
+
       # @return [false, true]
       def has_valid_background?
         background_score > @background_threshold
@@ -70,6 +86,22 @@ module Ikalog
       # @return [false, true]
       def has_valid_foreground?
         foreground_score > @foreground_threshold
+      end
+
+      # @todo
+      # @return [OpenCV::CvHistogram]
+      def histogram
+        ::OpenCV::CvHistogram.new(
+          1,
+          [3],
+          ::OpenCV::CV_HIST_ARRAY,
+          [[0, 255]],
+        ).calc_hist([@frame.ipl_image.BGR2GRAY])
+      end
+
+      # @return [OpenCV::IplImage]
+      def mask_ipl_image
+        ::OpenCV::IplImage.load(@mask_image_file_name, ::OpenCV::CV_LOAD_IMAGE_GRAYSCALE)
       end
     end
   end
