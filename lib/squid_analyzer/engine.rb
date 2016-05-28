@@ -1,6 +1,6 @@
 require "squid_analyzer/capture_source"
 require "squid_analyzer/scene_detector"
-require "squid_analyzer/scenes/lobby"
+require "squid_analyzer/scenes/game_result"
 
 module SquidAnalyzer
   class Engine
@@ -39,17 +39,9 @@ module SquidAnalyzer
     def scene_detectors
       @scene_detectors ||= [
         ::SquidAnalyzer::SceneDetector.new(
-          background_method: "TODO",
-          background_threshold: 0.100,
-          foreground_method: "TODO",
-          foreground_threshold: 0.9,
-          height: 90,
-          label: "lobby",
-          left: 0,
-          mask_image_file_name: "lobby.png",
-          scene_class: ::SquidAnalyzer::Scenes::Lobby,
-          top: 0,
-          width: 640,
+          mask_path: "images/game_result_mask.png",
+          scene_class: ::SquidAnalyzer::Scenes::GameResult,
+          score_threshold: 0.997,
         ),
       ]
     end

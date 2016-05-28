@@ -14,94 +14,54 @@ module SquidAnalyzer
 
     class Detection
       def initialize(
-        background_method:,
-        background_threshold:,
-        foreground_method:,
-        foreground_threshold:,
         frame:,
-        height:,
-        label:,
-        left:,
-        mask_image_file_name:,
+        mask_path:,
         scene_class:,
-        top:,
-        width:
+        score_threshold:
       )
-        @background_method = background_method
-        @background_threshold = background_threshold
-        @foreground_method = foreground_method
-        @foreground_threshold = foreground_threshold
         @frame = frame
-        @height = height
-        @label = label
-        @left = left
-        @mask_image_file_name = mask_image_file_name
+        @mask_path = mask_path
         @scene_class = scene_class
-        @top = top
-        @width = width
+        @score_threshold = score_threshold
       end
 
       # @return [SquidAnalyzer::Scenes::Base, nil]
       def call
-        if has_valid_background? && has_valid_foreground?
+        if matched?
           @scene_class.new
         end
       end
 
       private
 
-      # @todo
-      # @return [Float]
-      def background_score
-        1.0
+      # @return [OpenCV::IplImage]
+      def binary_image_with_black_area
+        @frame.ipl_image.BGR2GRAY.threshold(230, 255, OpenCV::CV_THRESH_BINARY)
       end
 
-      # @todo
-      # @return [Float]
-      def foreground_score
-        1.0
+      # @return [Integer]
+      def image_elements_count
+        @frame.ipl_image.width * @frame.ipl_image.height
       end
 
-      # @return [OpenCV::CvMat]
-      def binary_image_only_black_area
-        @frame.ipl_image.BGR2HSV.in_range(
-          ::OpenCV::CvScalar.new(0, 0, 0),
-          ::OpenCV::CvScalar.new(180, 255, 32),
-        ).not
-      end
-
-      # @return [OpenCV::CvMat]
-      def binary_image_only_white_area
-        @frame.ipl_image.BGR2HSV.in_range(
-          ::OpenCV::CvScalar.new(0, 0, 230),
-          ::OpenCV::CvScalar.new(180, 32, 255),
-        ).not
-      end
-
-      # @return [false, true]
-      def has_valid_background?
-        background_score > @background_threshold
-      end
-
-      # @return [false, true]
-      def has_valid_foreground?
-        foreground_score > @foreground_threshold
-      end
-
-      # @todo
-      # @return [OpenCV::CvHistogram]
-      def histogram
-        ::OpenCV::CvHistogram.new(
-          1,
-          [3],
-          ::OpenCV::CV_HIST_ARRAY,
-          [[0, 255]],
-        ).calc_hist([@frame.ipl_image.BGR2GRAY])
+      # @return [Integer]
+      def left_elements_count_after_masked
+        image_elements_count - binary_image_with_black_area.add(mask_image).count_non_zero
       end
 
       # @return [OpenCV::IplImage]
-      def mask_ipl_image
-        ::OpenCV::IplImage.load(@mask_image_file_name, ::OpenCV::CV_LOAD_IMAGE_GRAYSCALE)
+      def mask_image
+        ::OpenCV::IplImage.load(@mask_path, ::OpenCV::CV_LOAD_IMAGE_GRAYSCALE)
+      end
+
+      # @return [false, true]
+      def matched?
+        score > @score_threshold
+      end
+
+      # @return [Float]
+      def score
+        1 - (left_elements_count_after_masked.to_f / image_elements_count)
       end
     end
   end
