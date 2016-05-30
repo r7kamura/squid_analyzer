@@ -39,9 +39,9 @@ module SquidAnalyzer
     def scene_detectors
       @scene_detectors ||= [
         ::SquidAnalyzer::SceneDetector.new(
-          mask_path: "images/game_result_mask.png",
           scene_class: ::SquidAnalyzer::Scenes::GameResult,
-          score_threshold: 0.997,
+          score_threshold: 0.85,
+          template_image_path: "images/game_result_win.png",
         ),
       ]
     end
