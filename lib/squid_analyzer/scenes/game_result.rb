@@ -1,4 +1,5 @@
 require "squid_analyzer/character_images_horizontal_separation"
+require "squid_analyzer/digit_recognition"
 require "squid_analyzer/scenes/base"
 require "squid_analyzer/vertical_margin_trimming"
 
@@ -34,23 +35,18 @@ module SquidAnalyzer
       # @return [Hash{Symbol => Hash}]
       def analyze_player_entry(position)
         {
-          death: recognize_digits(
+          deaths_count: recognize_digits(
             height: DEATHS_COUNT_HEIGHT,
             left: position[:left] + DEATHS_COUNT_LEFT_IN_PLAYER_ENTRY,
             top: position[:top] + DEATHS_COUNT_HEIGHT,
             width: DEATHS_COUNT_WIDTH,
           ),
-          kill: recognize_digits(
+          kills_count: recognize_digits(
             height: KILLS_COUNT_HEIGHT,
             left: position[:left] + KILLS_COUNT_LEFT_IN_PLAYER_ENTRY,
             top: position[:top],
             width: KILLS_COUNT_WIDTH,
           ),
-          me: false,
-          point: nil,
-          level: 50,
-          rank_type: nil,
-          weapon_type: nil,
         }
       end
 
@@ -59,7 +55,7 @@ module SquidAnalyzer
         ENTRIES_COUNT_PER_TEAM.times.map do |i|
           {
             left: PLAYER_ENTRY_LEFT,
-            top: WIN_PLAYER_ENTRY_TOP + i * PLAYER_ENTRY_HEIGHT,
+            top: LOSE_PLAYER_ENTRY_TOP + i * PLAYER_ENTRY_HEIGHT,
           }
         end
       end
@@ -80,11 +76,12 @@ module SquidAnalyzer
         cropped_image = @frame.ipl_image.clone
         cropped_image.roi = ::OpenCV::CvRect.new(left, top, width, height)
         character_images = CharacterImagesHorizontalSeparation.new(cropped_image).call
-        character_images = character_images.map do |character_image|
+        character_images.map do |character_image|
           trimmed_image = VerticalMarginTrimming.new(character_image).call
-          OpenCV::GUI::Window.new(rand.to_s).show(trimmed_image)
-        end
-        [0]
+          image = trimmed_image.BGR2GRAY.threshold(230, 255, ::OpenCV::CV_THRESH_BINARY)
+          image = image.resize(::OpenCV::CvSize.new(15, 15))
+          DigitRecognition.new(image).call
+        end.map(&:to_s).join.to_i
       end
 
       # @return [Array<Hash>]
@@ -92,7 +89,7 @@ module SquidAnalyzer
         ENTRIES_COUNT_PER_TEAM.times.map do |i|
           {
             left: PLAYER_ENTRY_LEFT,
-            top: LOSE_PLAYER_ENTRY_TOP + i * PLAYER_ENTRY_HEIGHT,
+            top: WIN_PLAYER_ENTRY_TOP + i * PLAYER_ENTRY_HEIGHT,
           }
         end
       end
