@@ -40,7 +40,7 @@ module SquidAnalyzer
       # @return [SquidAnalyzer::Scenes::Base, nil]
       def call
         if matched?
-          @scene_class.new
+          @scene_class.new(@frame)
         end
       end
 
