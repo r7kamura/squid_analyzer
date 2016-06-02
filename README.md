@@ -47,13 +47,19 @@ squid_analyzer
 
 ## Current status
 
-- [x] Game result scene recognition
-- [x] Digits recognition
-- [x] Kill/Death count recognition on game result scene
-- [ ] Regular/Ranked match recognition on game result scene
-- [ ] Game start scene recognition
-- [ ] Stage type recognition on game start scene
-- [ ] Game rule recognition on game start scene
+- Game start scene
+    - [ ] Recognize scene
+    - [ ] Recognize game rule
+    - [ ] Recognize stage name
+- Game result scene
+    - [x] Recognize scene
+    - [x] Recognize kills/deaths count
+    - [x] Recognize my record
+    - [ ] Recognize regular or ranked match
+    - [ ] Recognize player level
+    - [ ] Recognize point
+- Others
+    - [x] Recognize digits
 
 For example, we can recognize the following data from game result scene.
 
@@ -62,18 +68,22 @@ For example, we can recognize the following data from game result scene.
   "lose_players": [
     {
       "deaths_count": 6,
+      "is_my_record": true,
       "kills_count": 8
     },
     {
       "deaths_count": 12,
+      "is_my_record": false,
       "kills_count": 9
     },
     {
       "deaths_count": 9,
+      "is_my_record": false,
       "kills_count": 3
     },
     {
       "deaths_count": 6,
+      "is_my_record": false,
       "kills_count": 3
     }
   ],
@@ -81,18 +91,22 @@ For example, we can recognize the following data from game result scene.
   "win_players": [
     {
       "deaths_count": 7,
+      "is_my_record": false,
       "kills_count": 8
     },
     {
       "deaths_count": 7,
+      "is_my_record": false,
       "kills_count": 6
     },
     {
       "deaths_count": 5,
+      "is_my_record": false,
       "kills_count": 9
     },
     {
       "deaths_count": 4,
+      "is_my_record": false,
       "kills_count": 10
     }
   ]
