@@ -181,15 +181,32 @@ module SquidAnalyzer
       @image = image
     end
 
+    # @return [String]
     def call
       PATTERNS.map.with_index do |pattern, index|
         score = HEIGHT.times.flat_map do |y|
           WIDTH.times.map do |x|
-            (@image[y, x][0] == 0 ? 0 : 1) == pattern[y][x] ? 1 : 0
+            (resized_image[y, x][0] == 0 ? 0 : 1) ^ pattern[y][x]
           end
         end.inject(:+)
         [index, score]
-      end.sort_by {|index, score| -score }.first[0]
+      end.sort_by {|index, score| score }.first[0].to_s
+    end
+
+    private
+
+    # @return [OpenCV::IplImage]
+    def binary_image
+      vertical_trimmed_image.BGR2GRAY.threshold(230, 255, ::OpenCV::CV_THRESH_BINARY)
+    end
+
+    def resized_image
+      @resized_image ||= binary_image.resize(::OpenCV::CvSize.new(WIDTH, HEIGHT))
+    end
+
+    # @return [OpenCV::IplImage]
+    def vertical_trimmed_image
+      VerticalMarginTrimming.new(@image).call
     end
   end
 end

@@ -1,7 +1,5 @@
-require "squid_analyzer/character_images_horizontal_separation"
-require "squid_analyzer/digit_recognition"
 require "squid_analyzer/scenes/base"
-require "squid_analyzer/vertical_margin_trimming"
+require "squid_analyzer/digits_recognition"
 
 module SquidAnalyzer
   module Scenes
@@ -71,17 +69,11 @@ module SquidAnalyzer
       # @param left [Integer]
       # @param top [Integer]
       # @param width [Integer]
-      # @return [Array<Integer>]
+      # @return [Integer]
       def recognize_digits(height:, left:, top:, width:)
-        cropped_image = @frame.ipl_image.clone
-        cropped_image.roi = ::OpenCV::CvRect.new(left, top, width, height)
-        character_images = CharacterImagesHorizontalSeparation.new(cropped_image).call
-        character_images.map do |character_image|
-          trimmed_image = VerticalMarginTrimming.new(character_image).call
-          image = trimmed_image.BGR2GRAY.threshold(230, 255, ::OpenCV::CV_THRESH_BINARY)
-          image = image.resize(::OpenCV::CvSize.new(15, 15))
-          DigitRecognition.new(image).call
-        end.map(&:to_s).join.to_i
+        image = @frame.ipl_image.clone
+        image.roi = ::OpenCV::CvRect.new(left, top, width, height)
+        DigitsRecognition.new(image).call.to_i
       end
 
       # @return [Array<Hash>]
