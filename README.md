@@ -4,17 +4,17 @@ Data analyzer for Splatoon.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem "squid_analyzer"
-```
-
-And install OpenCV 2.x (The installation code below is for OS X):
+Install OpenCV 2.x (The installation code below is for OS X):
 
 ```sh
 brew tap homebrew/science
 brew install opencv
+```
+
+And add this line to your application's Gemfile:
+
+```ruby
+gem "squid_analyzer"
 ```
 
 And then execute:
