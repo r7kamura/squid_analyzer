@@ -1,4 +1,5 @@
 # SquidAnalyzer
+
 Data analyzer for Splatoon.
 
 ## Installation
@@ -29,6 +30,7 @@ gem install squid_analyzer
 ```
 
 ## Requirements
+
 SquidAnalyzer is tested on:
 
 - Mac OS X 10.10.5
@@ -37,10 +39,65 @@ SquidAnalyzer is tested on:
 - [Intensity Shuttle for USB 3.0](https://www.blackmagicdesign.com/jp/products/intensity)
 
 ## Usage
+
 Use `squid_analyzer` executable.
 
 ```sh
 squid_analyzer
+```
+
+## Current status
+
+- [x] Game result scene recognition
+- [x] Digits recognition
+- [x] Kill/Death count recognition on game result scene
+- [ ] Regular/Ranked match recognition on game result scene
+- [ ] Game start scene recognition
+- [ ] Stage type recognition on game start scene
+- [ ] Game rule recognition on game start scene
+
+For example, we can recognize the following data from game result scene.
+
+```json
+{
+  "lose_players": [
+    {
+      "deaths_count": 6,
+      "kills_count": 8
+    },
+    {
+      "deaths_count": 12,
+      "kills_count": 9
+    },
+    {
+      "deaths_count": 9,
+      "kills_count": 3
+    },
+    {
+      "deaths_count": 6,
+      "kills_count": 3
+    }
+  ],
+  "type": "GameResult",
+  "win_players": [
+    {
+      "deaths_count": 7,
+      "kills_count": 8
+    },
+    {
+      "deaths_count": 7,
+      "kills_count": 6
+    },
+    {
+      "deaths_count": 5,
+      "kills_count": 9
+    },
+    {
+      "deaths_count": 4,
+      "kills_count": 10
+    }
+  ]
+}
 ```
 
 ## Development
