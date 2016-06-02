@@ -36,6 +36,13 @@ SquidAnalyzer is tested on:
 - Ruby 2.2.0
 - [Intensity Shuttle for USB 3.0](https://www.blackmagicdesign.com/jp/products/intensity)
 
+## Usage
+Use `squid_analyzer` executable.
+
+```sh
+squid_analyzer
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
