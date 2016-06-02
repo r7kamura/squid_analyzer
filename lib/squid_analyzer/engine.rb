@@ -1,7 +1,13 @@
 require "json"
+require "opencv"
 require "squid_analyzer/capture_source"
+require "squid_analyzer/character_images_horizontal_separation"
+require "squid_analyzer/digit_recognition"
+require "squid_analyzer/digits_recognition"
 require "squid_analyzer/scene_detector"
+require "squid_analyzer/scenes/base"
 require "squid_analyzer/scenes/game_result"
+require "squid_analyzer/vertical_margin_trimming"
 
 module SquidAnalyzer
   class Engine

@@ -1,5 +1,3 @@
-require "opencv"
-
 module SquidAnalyzer
   class CaptureSource
     # @param device_id [Fixnum, String, Symbol, nil]

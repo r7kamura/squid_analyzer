@@ -1,7 +1,3 @@
-require "squid_analyzer/character_images_horizontal_separation"
-require "squid_analyzer/digit_recognition"
-require "squid_analyzer/vertical_margin_trimming"
-
 module SquidAnalyzer
   class DigitsRecognition
     # @param image [OpenCV::IplImage]

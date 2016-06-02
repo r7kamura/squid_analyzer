@@ -1,6 +1,3 @@
-require "squid_analyzer/scenes/base"
-require "squid_analyzer/digits_recognition"
-
 module SquidAnalyzer
   module Scenes
     class GameResult < Base
