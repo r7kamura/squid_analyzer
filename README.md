@@ -7,8 +7,7 @@ Data analyzer for Splatoon.
 Install OpenCV 2.x (The installation code below is for OS X):
 
 ```sh
-brew tap homebrew/science
-brew install opencv
+brew install homebrew/science/opencv
 ```
 
 And add this line to your application's Gemfile:
