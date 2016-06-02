@@ -1,9 +1,9 @@
 module SquidAnalyzer
   module Scenes
     class Base
-      # @param frame [SquidAnalyzer::Frame]
-      def initialize(frame)
-        @frame = frame
+      # @param image [OpenCV::IplImage]
+      def initialize(image)
+        @image = image
       end
     end
   end

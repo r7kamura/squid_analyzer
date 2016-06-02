@@ -22,6 +22,7 @@ module SquidAnalyzer
       def as_json
         {
           lose_players: lose_players,
+          type: self.class.to_s.split("::").last,
           win_players: win_players,
         }
       end
@@ -71,7 +72,7 @@ module SquidAnalyzer
       # @param width [Integer]
       # @return [Integer]
       def recognize_digits(height:, left:, top:, width:)
-        image = @frame.ipl_image.clone
+        image = @image.clone
         image.roi = ::OpenCV::CvRect.new(left, top, width, height)
         DigitsRecognition.new(image).call.to_i
       end

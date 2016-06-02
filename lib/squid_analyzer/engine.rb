@@ -7,7 +7,7 @@ module SquidAnalyzer
   class Engine
     def run
       loop do
-        read_next_frame
+        step
       end
     end
 
@@ -19,22 +19,14 @@ module SquidAnalyzer
       @capture_source ||= CaptureSource.new
     end
 
-    # @param frame [SquidAnalyzer::Frame]
+    # @param image [OpenCV::IplImage]
     # @return [SquidAnalyzer::Scene, nil]
-    def detect_scene(frame)
+    def detect_scene(image)
       scene_detectors.find do |scene_detector|
-        if (scene = scene_detector.call(frame.clone))
+        if (scene = scene_detector.call(image))
           break scene
         end
       end
-    end
-
-    # @todo
-    def read_next_frame
-      if (scene = detect_scene(capture_source.read_frame))
-        puts JSON.pretty_generate(scene.as_json)
-      end
-      sleep 1
     end
 
     # @return [Array<SquidAnalyzer::SceneDetector>]
@@ -46,6 +38,14 @@ module SquidAnalyzer
           template_image_path: "images/game_result_win.png",
         ),
       ]
+    end
+
+    # @todo
+    def step
+      if (scene = detect_scene(capture_source.read_image))
+        puts JSON.pretty_generate(scene.as_json)
+      end
+      sleep 1
     end
   end
 end

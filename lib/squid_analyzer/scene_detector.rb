@@ -6,11 +6,11 @@ module SquidAnalyzer
       @template_image_path = template_image_path
     end
 
-    # @param frame [SquidAnalyzer::Frame]
+    # @param image [OpenCV::IplImage]
     # @return [SquidAnalyzer::Scenes::Base, nil]
-    def call(frame)
+    def call(image)
       Detection.new(
-        frame: frame,
+        image: image,
         scene_class: @scene_class,
         score_threshold: @score_threshold,
         template_image: template_image,
@@ -26,12 +26,12 @@ module SquidAnalyzer
 
     class Detection
       def initialize(
-        frame:,
+        image:,
         scene_class:,
         score_threshold:,
         template_image:
       )
-        @frame = frame
+        @image = image
         @scene_class = scene_class
         @score_threshold = score_threshold
         @template_image = template_image
@@ -40,7 +40,7 @@ module SquidAnalyzer
       # @return [SquidAnalyzer::Scenes::Base, nil]
       def call
         if matched?
-          @scene_class.new(@frame)
+          @scene_class.new(@image)
         end
       end
 
@@ -53,7 +53,7 @@ module SquidAnalyzer
 
       # @return [Float]
       def score
-        @frame.ipl_image.match_template(@template_image, ::OpenCV::CV_TM_CCORR_NORMED).min_max_loc[1]
+        @image.match_template(@template_image, ::OpenCV::CV_TM_CCORR_NORMED).min_max_loc[1]
       end
     end
   end

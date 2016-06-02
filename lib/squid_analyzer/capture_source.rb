@@ -1,4 +1,3 @@
-require "squid_analyzer/frame"
 require "opencv"
 
 module SquidAnalyzer
@@ -10,9 +9,9 @@ module SquidAnalyzer
       open_cv_capture
     end
 
-    # @return [SquidAnalyzer::Frame]
-    def read_frame
-      Frame.new(@cv_capture.query)
+    # @return [::OpenCV::IplImage]
+    def read_image
+      @cv_capture.query
     end
 
     private
