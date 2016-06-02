@@ -1,3 +1,4 @@
+require "json"
 require "squid_analyzer/capture_source"
 require "squid_analyzer/scene_detector"
 require "squid_analyzer/scenes/game_result"
@@ -30,8 +31,9 @@ module SquidAnalyzer
 
     # @todo
     def read_next_frame
-      scene = detect_scene(capture_source.read_frame)
-      puts scene
+      if (scene = detect_scene(capture_source.read_frame))
+        puts JSON.pretty_generate(scene.as_json)
+      end
       sleep 1
     end
 
